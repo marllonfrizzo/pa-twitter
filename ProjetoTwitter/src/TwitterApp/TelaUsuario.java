@@ -24,10 +24,10 @@ import twitter4j.User;
  * @author adao-
  */
 public class TelaUsuario extends javax.swing.JDialog {
-      TwitterFuncao tweetar = new  TwitterFuncao();
-       List <User> lista ;
-        User user ;
-         int i = 0;
+    TwitterFuncao tweetar = new TwitterFuncao();
+    List<User> lista;
+    User user;
+    int i = 0;
   /**
      * Creates new form TelaUsuario
      */
@@ -35,62 +35,57 @@ public class TelaUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-     public void imagem(User user) {
+    
+    public void imagem(User user) {
         String ima = user.getBiggerProfileImageURL();
-     // inicializa a imagem URL dentro de um objeto ImageIcon
+        // inicializa a imagem URL dentro de um objeto ImageIcon
         URL urlImg = null;
-         try {
-             urlImg = new URL(ima);
-         } catch (MalformedURLException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            urlImg = new URL(ima);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ImageIcon imgIcon = new ImageIcon(urlImg);
         // faz o preload da imagem
-        while(imgIcon.getImageLoadStatus() == MediaTracker.LOADING); 
+        while (imgIcon.getImageLoadStatus() == MediaTracker.LOADING);
 
         // injeta o icone no label
         Jimagem.setIcon(imgIcon);
-       
-  
     }
-     public void tela(User user) throws TwitterException{
-         lista = tweetar.Seguindo(conexao, conexao.showUser(conexao.getScreenName()));
-         i=0;
-        while(i<lista.size()){
-         if(user.getId()==lista.get(i).getId()){
-            jdeixar.setEnabled(true);
-            break;
-         }else{
-         jseguir.setEnabled(true);
-         }
-         i++;
+     
+    public void tela(User user) throws TwitterException {
+        lista = tweetar.Seguindo(conexao, conexao.showUser(conexao.getScreenName()));
+        i = 0;
+        while (i < lista.size()) {
+            if (user.getId() == lista.get(i).getId()) {
+                jdeixar.setEnabled(true);
+                break;
+            } else {
+                jseguir.setEnabled(true);
+            }
+            i++;
         }
-     }
-     
-     
-     
-     
-     public void PreencherTime(User user) throws TwitterException{
-       tela(user);
-       this.user = user;
-         List<Status> statuses = null;
-              
-              statuses = tweetar.Timeline(conexao,user);
-             
-      
-         for (int i=0 ; i<statuses.size();i++) {
-             Status status = statuses.get(i);
-            Jtimeline.append(status.getUser().getName() +" : " +status.getText()+"\n");
-         }
     }
-      public void Nome1(User usuario) throws TwitterException{
-            
-               Jseguindo.setText("<html>Seguindo<br>" + usuario.getFriendsCount() );
-               Jseguidores.setText("<html>Seguidores<br>" + usuario.getFollowersCount());
-               Jtweets.setText("<html>Tweets<br>" + usuario.getStatusesCount());
-              Jnome.setText(usuario.getName());
-              Jnome2.setText(usuario.getScreenName());
-        
+      
+    public void PreencherTime(User user) throws TwitterException {
+        tela(user);
+        this.user = user;
+        List<Status> statuses = null;
+
+        statuses = tweetar.Timeline(conexao, user);
+
+        for (int i = 0; i < statuses.size(); i++) {
+            Status status = statuses.get(i);
+            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+        }
+    }
+    
+    public void Nome1(User usuario) throws TwitterException {
+        Jseguindo.setText("<html>Seguindo<br>" + usuario.getFriendsCount());
+        Jseguidores.setText("<html>Seguidores<br>" + usuario.getFollowersCount());
+        Jtweets.setText("<html>Tweets<br>" + usuario.getStatusesCount());
+        Jnome.setText(usuario.getName());
+        Jnome2.setText(usuario.getScreenName());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,6 +110,8 @@ public class TelaUsuario extends javax.swing.JDialog {
         Jtimeline = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Twitter for Java");
+        setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -260,7 +257,10 @@ public class TelaUsuario extends javax.swing.JDialog {
                     .addContainerGap(270, Short.MAX_VALUE)))
         );
 
+        getAccessibleContext().setAccessibleName("Twitter for Java");
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
@@ -283,29 +283,27 @@ public class TelaUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_JseguidoresActionPerformed
 
     private void jseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jseguirActionPerformed
-         
-            
         try {
-              tweetar.Seguir(conexao,user.getScreenName());
-              JOptionPane.showMessageDialog(null, "Voce esta seguindo : "+user.getScreenName());
-          } catch (TwitterException ex) {
-             JOptionPane.showMessageDialog(null, "ERRO AO SEGUIR : "+user.getScreenName());
-          }
-          jseguir.setEnabled(false);
-          jdeixar.setEnabled(true);
-          
+            tweetar.Seguir(conexao,user.getScreenName());
+            jseguir.setEnabled(false);
+            jdeixar.setEnabled(true);
+            
+            JOptionPane.showMessageDialog(null, "Voce esta seguindo : "+user.getScreenName());
+        } catch (TwitterException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO AO SEGUIR : "+user.getScreenName());
+        }
     }//GEN-LAST:event_jseguirActionPerformed
-
+   
     private void jdeixarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdeixarActionPerformed
-         try {
-              tweetar.Deixar(conexao,user.getScreenName());
-              JOptionPane.showMessageDialog(null, "Voce deixou de seguir : "+user.getScreenName());
-          } catch (TwitterException ex) {
-             JOptionPane.showMessageDialog(null, "ERRO AO SEGUIR : "+user.getScreenName());
-          }
-          jseguir.setEnabled(true);
-          jdeixar.setEnabled(false);
-          
+        try {
+            tweetar.Deixar(conexao, user.getScreenName());
+            jseguir.setEnabled(true);
+            jdeixar.setEnabled(false);
+                       
+            JOptionPane.showMessageDialog(null, "Voce deixou de seguir : " + user.getScreenName());
+        } catch (TwitterException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO AO SEGUIR : " + user.getScreenName());
+        }
     }//GEN-LAST:event_jdeixarActionPerformed
 
     /**
