@@ -20,8 +20,8 @@ public static void main(String[] args) throws IOException, TwitterException {
             TwitterConfiguration novo = new TwitterConfiguration();
             
            Twitter twitter = novo.conexao();
-          home = new Home(twitter);
-           home.setVisible(true);
+              home = new Home(twitter);
+                home.setVisible(true);
            
            
            //automatico token

@@ -169,7 +169,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          conexao(jTextField1.getText());
-        Home home = new Home(conexao);
+        Home home = null;
+        try {
+            home = new Home(conexao);
+        } catch (TwitterException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
     
