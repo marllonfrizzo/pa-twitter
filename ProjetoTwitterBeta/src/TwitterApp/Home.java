@@ -50,12 +50,9 @@ public class Home extends javax.swing.JFrame {
     public Home(Twitter twitter) throws TwitterException  {
         initComponents();
         conexao = twitter;
-   
         PreencherTime();
-       
         Nome();
         imagem(usuarioconexao);
-     
     }
     
     public void imagem(User user) {
@@ -77,6 +74,12 @@ public class Home extends javax.swing.JFrame {
     
     public void PreencherTime() {
         List<Status> statuses = null;
+        
+        /* Limpa a Timeline antes de preenchê-la.
+           Em alguns momentos depois de exibir os tweets/seguidores/seguindo,
+           ao voltar a timeline as informações anteriores ainda estavam lá,
+           sendo mostrada junto com a timeline. */
+        Jtimeline.setText(" ");
         statuses = tweetar.HomeTimeline(conexao);
         for (int i = 0; i < statuses.size(); i++) {
             Status status = statuses.get(i);
@@ -315,94 +318,103 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     if(controle==0){
-  
-         try {
-             tweetar.tweetar(conexao, Jstatus.getText());
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
-           JOptionPane.showMessageDialog(null, Jstatus.getText()+"  :Tweetado com sucesso ");
-        
-        Jtimeline.setText(" ");
-        PreencherTime();
-         try {
-             Nome();
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        
-     }else{
-   
-         try {
-             tweetar.imagem(conexao, arquivo, Jstatus.getText());
-             JOptionPane.showMessageDialog(null, Jstatus.getText()+"  :Tweetado com sucesso ");
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         jcarregafoto.setText(" ");
-        controle=0;     
-     }
+        if (controle == 0) {
+            try {
+                /* Valida se o usuário digitou algo no campo para twettar */
+                if (Jstatus.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Digite alguma coisa para poder Tweetar!");
+                } else {
+                    tweetar.tweetar(conexao, Jstatus.getText());
+                    JOptionPane.showMessageDialog(null, Jstatus.getText() + "  :Tweetado com sucesso ");
+                }
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            Jtimeline.setText(" ");
+            PreencherTime();
+            try {
+                Nome();
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                tweetar.imagem(conexao, arquivo, Jstatus.getText());
+                JOptionPane.showMessageDialog(null, Jstatus.getText() + "  :Tweetado com sucesso ");
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jcarregafoto.setText(" ");
+            controle = 0;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
-       
         try {
             lista = tweetar.Seguindo(conexao, usuarioconexao);
         } catch (TwitterException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-             Jtimeline.setText(" " );
+        Jtimeline.setText(" ");
         for (i = 0; i < 5; i++) {
-          User  user = lista.get(i);
-              Jtimeline.append(user.getScreenName()+"\n");
+            User user = lista.get(i);
+            Jtimeline.append(user.getScreenName() + "\n");
         }
+        jTimeline.setEnabled(true);
     }//GEN-LAST:event_JseguindoActionPerformed
 
     private void JseguidoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguidoresActionPerformed
-       lista=null;
+        lista = null;
         try {
-             lista=tweetar.Seguidores(conexao,usuarioconexao);
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
-           Jtimeline.setText(" " );
-        for(i=0;i<5;i++){
-          User  user =lista.get(i);
-        Jtimeline.append(user.getScreenName()+"\n");
+            lista = tweetar.Seguidores(conexao, usuarioconexao);
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Jtimeline.setText(" ");
+        for (i = 0; i < 5; i++) {
+            User user = lista.get(i);
+            Jtimeline.append(user.getScreenName() + "\n");
+        }
+        jTimeline.setEnabled(true);
     }//GEN-LAST:event_JseguidoresActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        arquivo =tweetar.escolherArquivos();
+        arquivo = tweetar.escolherArquivos();
         jcarregafoto.setText("Foto Carregada");
-        controle=1;
+        controle = 1;
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String nome = jTextUsuario.getText();
-        User user = null;
-        try {
-            user = conexao.showUser(nome);
-        } catch (TwitterException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        TelaUsuario jc = new TelaUsuario(null, true);
-        try {
-            jc.PreencherTime(user);
-            jc.Nome1(user);
-            jc.imagem(user);
-        } catch (TwitterException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        jc.setVisible(true);
-        
-        try {
-            Nome();
-        } catch (TwitterException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+
+        /* Valida se o usuário digitou alguma coisa no campo pesquisar */
+        if (nome.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite um usuário para pesquisar!");
+        } else {
+            User user = null;
+            try {
+                user = conexao.showUser(nome);
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            TelaUsuario jc = new TelaUsuario(null, true);
+            try {
+                jc.PreencherTime(user);
+                jc.Nome1(user);
+                jc.imagem(user);
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            jc.setVisible(true);
+
+            try {
+                Nome();
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
