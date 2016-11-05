@@ -24,86 +24,92 @@ import twitter4j.conf.ConfigurationBuilder;
  * @author adao-
  */
 public class TelaLogin extends javax.swing.JFrame {
+
     JFXPanel javafxPanel;
     WebView webComponent;
     static String url;
     static Twitter conexao;
-   static  TelaLogin novo;
-   static RequestToken requestToken;
- 
-   
-    private String consumerKey = "EwcxsvSwWO94YRGpN55Bc01xG" ;
-  private  String consumerSecret = "d6kYAfnyhxkoWFNH3SqqxkzZ3D7SURWM0MV5OCKPytJmfFVD10";
-                  
-    public String pegaurl() throws TwitterException{
-              internet acessar = new internet();
-              Scanner entrada = new Scanner(System.in);
-              String url;
-              Twitter twitter = new TwitterFactory().getInstance();
-               conexao = twitter;
-               conexao.setOAuthConsumer(consumerKey ,consumerSecret);
-               requestToken = conexao.getOAuthRequestToken();
-                url = requestToken.getAuthorizationURL();
-                System.out.println(url);
-          return url;
-          }
+    static TelaLogin novo;
+    static RequestToken requestToken;
+
+    private String consumerKey = "EwcxsvSwWO94YRGpN55Bc01xG";
+    private String consumerSecret = "d6kYAfnyhxkoWFNH3SqqxkzZ3D7SURWM0MV5OCKPytJmfFVD10";
+
+    public String pegaurl() throws TwitterException {
+        internet acessar = new internet();
+        Scanner entrada = new Scanner(System.in);
+        String url;
+        Twitter twitter = new TwitterFactory().getInstance();
+        conexao = twitter;
+        conexao.setOAuthConsumer(consumerKey, consumerSecret);
+        requestToken = conexao.getOAuthRequestToken();
+        url = requestToken.getAuthorizationURL();
+        System.out.println(url);
+        return url;
+    }
+
     public void conexao(String pin) {
-                      
-         AccessToken accessToken = null;
-                    
+
+        AccessToken accessToken = null;
+
         try {
             accessToken = conexao.getOAuthAccessToken(requestToken, pin);
         } catch (TwitterException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-                               
-                ConfigurationBuilder cb = new ConfigurationBuilder();
 
-                cb.setDebugEnabled(true)
-		.setOAuthConsumerKey(consumerKey)
-		.setOAuthConsumerSecret(consumerSecret)
-		.setOAuthAccessToken(accessToken.getToken())
-		.setOAuthAccessTokenSecret(accessToken.getTokenSecret());
-                
-                TwitterFactory factory = new TwitterFactory(cb.build());
-		conexao= factory.getInstance();
-                
-                conexao.setOAuthAccessToken(accessToken);
-           //  System.out.print("CONECTADO");    
-           JOptionPane.showMessageDialog(null, "CONECTADO.");
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken.getToken())
+                .setOAuthAccessTokenSecret(accessToken.getTokenSecret());
+
+        TwitterFactory factory = new TwitterFactory(cb.build());
+        conexao = factory.getInstance();
+
+        conexao.setOAuthAccessToken(accessToken);
+        //  System.out.print("CONECTADO");    
+        JOptionPane.showMessageDialog(null, "CONECTADO.");
+        this.dispose();
     }
+
     public TelaLogin() {
-         javafxPanel = new JFXPanel();
+        javafxPanel = new JFXPanel();
         initComponents();
         initSwingComponents();
-        try {     
-            url= pegaurl();
+        try {
+            url = pegaurl();
         } catch (TwitterException ex) {
-           JOptionPane.showMessageDialog(null, "Falha ", "Erro", JOptionPane.ERROR_MESSAGE);
-        }              
-         loadJavaFXScene(url);
+            JOptionPane.showMessageDialog(null, "Falha ", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        loadJavaFXScene(url);
     }
-     private void initSwingComponents(){   
+
+    private void initSwingComponents() {
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(javafxPanel);    
-      }
-    private void loadJavaFXScene(String url){
-    Platform.runLater(new Runnable() {
-      @Override
-      public void run() {
+        mainPanel.add(javafxPanel);
+    }
 
-        BorderPane borderPane = new BorderPane();
-        webComponent = new WebView();
+    private void loadJavaFXScene(String url) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
-        webComponent.getEngine().load(url);
+                BorderPane borderPane = new BorderPane();
+                webComponent = new WebView();
 
-        borderPane.setCenter(webComponent);
-        Scene scene = new Scene(borderPane,350,219);
-        javafxPanel.setScene(scene);
+                webComponent.getEngine().load(url);
 
-      }
-    });
-  }
+                borderPane.setCenter(webComponent);
+                Scene scene = new Scene(borderPane, 350, 219);
+                javafxPanel.setScene(scene);
+
+            }
+        });
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,18 +122,22 @@ public class TelaLogin extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login on Twitter for Java");
+        setResizable(false);
+        setSize(new java.awt.Dimension(800, 600));
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 349, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 219, Short.MAX_VALUE)
+            .addGap(0, 364, Short.MAX_VALUE)
         );
 
         jButton1.setText("AUTENTICAR");
@@ -137,6 +147,8 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Faça Login e Digite o Token para permitir o aplicativo ter acesso à sua conta:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,31 +156,35 @@ public class TelaLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1)
+                        .addGap(0, 194, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         conexao(jTextField1.getText());
+        conexao(jTextField1.getText());
         Home home = null;
         try {
             home = new Home(conexao);
@@ -177,7 +193,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -208,15 +224,16 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 novo = new TelaLogin();
-                   novo.setLocationRelativeTo(null);
-                     novo.setVisible(true);
-        }
+                novo = new TelaLogin();
+                novo.setLocationRelativeTo(null);
+                novo.setVisible(true);
+            }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
