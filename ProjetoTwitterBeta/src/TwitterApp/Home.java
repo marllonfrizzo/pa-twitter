@@ -55,10 +55,7 @@ public class Home extends javax.swing.JFrame {
        
         Nome();
         imagem(usuarioconexao);
-<<<<<<< HEAD
      
-=======
->>>>>>> origin/master
     }
     
     public void imagem(User user) {
@@ -313,8 +310,6 @@ public class Home extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        getAccessibleContext().setAccessibleName("Twitter for Java");
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -351,26 +346,16 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
-<<<<<<< HEAD
        
-=======
->>>>>>> origin/master
         try {
             lista = tweetar.Seguindo(conexao, usuarioconexao);
         } catch (TwitterException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-<<<<<<< HEAD
              Jtimeline.setText(" " );
         for (i = 0; i < 5; i++) {
           User  user = lista.get(i);
               Jtimeline.append(user.getScreenName()+"\n");
-=======
-        //      jTextseguindo.setText(" " );
-        for (i = 0; i < lista.size(); i++) {
-            usuarioconexao = lista.get(i);
-            //    jTextseguindo.append(user.getScreenName()+"\n");
->>>>>>> origin/master
         }
     }//GEN-LAST:event_JseguindoActionPerformed
 
