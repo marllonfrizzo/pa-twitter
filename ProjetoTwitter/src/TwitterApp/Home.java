@@ -33,9 +33,9 @@ import twitter4j.User;
  * @author adao-
  */
 public class Home extends javax.swing.JFrame {
-     int i = 0;
-     int controle=0;
-     User usuarioconexao ;
+    int i = 0;
+    int controle=0;
+    User usuarioconexao;
     static Twitter conexao;
     static Home home;
     URL urlImg;
@@ -54,46 +54,43 @@ public class Home extends javax.swing.JFrame {
         PreencherTime();
        
         Nome();
-         imagem(usuarioconexao);
-        
+        imagem(usuarioconexao);
+     
     }
     
-      public void imagem(User user) {
+    public void imagem(User user) {
         String ima = user.getBiggerProfileImageURL();
-     // inicializa a imagem URL dentro de um objeto ImageIcon
+        // inicializa a imagem URL dentro de um objeto ImageIcon
         URL urlImg = null;
-         try {
-             urlImg = new URL(ima);
-         } catch (MalformedURLException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            urlImg = new URL(ima);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ImageIcon imgIcon = new ImageIcon(urlImg);
         // faz o preload da imagem
-        while(imgIcon.getImageLoadStatus() == MediaTracker.LOADING); 
+        while (imgIcon.getImageLoadStatus() == MediaTracker.LOADING);
 
         // injeta o icone no label
         Jimagem.setIcon(imgIcon);
-       
-  
     }
-    public void PreencherTime(){
-        
-         List<Status> statuses = null;
-         statuses = tweetar.HomeTimeline(conexao);
-         for (int i=0 ; i<statuses.size();i++) {
-             Status status = statuses.get(i);
-            Jtimeline.append(status.getUser().getName() +" : " +status.getText()+"\n");
-         }
+    
+    public void PreencherTime() {
+        List<Status> statuses = null;
+        statuses = tweetar.HomeTimeline(conexao);
+        for (int i = 0; i < statuses.size(); i++) {
+            Status status = statuses.get(i);
+            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+        }
     }
-    public void Nome() throws TwitterException{
-              usuarioconexao = conexao.showUser(conexao.getScreenName());
-               Jseguindo.setText("<html>Seguindo<br>" + usuarioconexao.getFriendsCount() );
-               Jseguidores.setText("<html>Seguidores<br>" + usuarioconexao.getFollowersCount());
-               Jtweets.setText("<html>Tweets<br>" + usuarioconexao.getStatusesCount());
-              Jnome.setText(usuarioconexao.getName());
-              Jnome2.setText(usuarioconexao.getScreenName());
-         
-        
+    
+    public void Nome() throws TwitterException {
+        usuarioconexao = conexao.showUser(conexao.getScreenName());
+        Jseguindo.setText("<html>Seguindo<br>" + usuarioconexao.getFriendsCount());
+        Jseguidores.setText("<html>Seguidores<br>" + usuarioconexao.getFollowersCount());
+        Jtweets.setText("<html>Tweets<br>" + usuarioconexao.getStatusesCount());
+        Jnome.setText(usuarioconexao.getName());
+        Jnome2.setText(usuarioconexao.getScreenName());
     }
      /**
      * This method is called from within the constructor to initialize the form.
@@ -119,10 +116,13 @@ public class Home extends javax.swing.JFrame {
         Jtimeline = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
         jcarregafoto = new javax.swing.JLabel();
+        jTimeline = new javax.swing.JButton();
         jTextUsuario = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Twitter for Java");
+        setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -130,6 +130,11 @@ public class Home extends javax.swing.JFrame {
 
         Jtweets.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         Jtweets.setText("Tweets");
+        Jtweets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtweetsActionPerformed(evt);
+            }
+        });
 
         Jseguindo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         Jseguindo.setText("Seguindo");
@@ -218,6 +223,14 @@ public class Home extends javax.swing.JFrame {
 
         jcarregafoto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
 
+        jTimeline.setText("Timeline");
+        jTimeline.setEnabled(false);
+        jTimeline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTimelineActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -228,7 +241,8 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jTimeline)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
@@ -250,7 +264,9 @@ public class Home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jButton4))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton4)
+                        .addComponent(jTimeline)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -295,6 +311,7 @@ public class Home extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -329,15 +346,16 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
-         try {
-             lista=tweetar.Seguindo(conexao,usuarioconexao);
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
-  //      jTextseguindo.setText(" " );
-        for(i=0;i<lista.size();i++){
-            usuarioconexao =lista.get(i);
-    //    jTextseguindo.append(user.getScreenName()+"\n");
+       
+        try {
+            lista = tweetar.Seguindo(conexao, usuarioconexao);
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             Jtimeline.setText(" " );
+        for (i = 0; i < 5; i++) {
+          User  user = lista.get(i);
+              Jtimeline.append(user.getScreenName()+"\n");
         }
     }//GEN-LAST:event_JseguindoActionPerformed
 
@@ -348,10 +366,10 @@ public class Home extends javax.swing.JFrame {
          } catch (TwitterException ex) {
              Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
          }
-      //   jTextseguidores.setText(" " );
-        for(i=0;i<lista.size();i++){
-            usuarioconexao =lista.get(i);
-       // jTextseguidores.append(user.getScreenName()+"\n");
+           Jtimeline.setText(" " );
+        for(i=0;i<5;i++){
+          User  user =lista.get(i);
+        Jtimeline.append(user.getScreenName()+"\n");
         }
     }//GEN-LAST:event_JseguidoresActionPerformed
 
@@ -362,25 +380,47 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       String nome = jTextUsuario.getText();
-       User user = null;
-         try {
-              user = conexao.showUser(nome);
-              
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        String nome = jTextUsuario.getText();
+        User user = null;
+        try {
+            user = conexao.showUser(nome);
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         TelaUsuario jc = new TelaUsuario(null, true);
-       
-         try {
-              jc.PreencherTime(user);
-             jc.Nome1(user);
-             jc.imagem(user);
-         } catch (TwitterException ex) {
-             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            jc.PreencherTime(user);
+            jc.Nome1(user);
+            jc.imagem(user);
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         jc.setVisible(true);
+        
+        try {
+            Nome();
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void JtweetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtweetsActionPerformed
+        Jtimeline.setText(" ");
+        List<Status> statuses = null;
+        statuses = tweetar.Timeline(conexao, usuarioconexao);
+        for (int i = 0; i < statuses.size(); i++) {
+            Status status = statuses.get(i);
+            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+        }
+        jTimeline.setEnabled(true);
+    }//GEN-LAST:event_JtweetsActionPerformed
+
+    private void jTimelineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTimelineActionPerformed
+     PreencherTime();
+     jTimeline.setEnabled(false);
+    }//GEN-LAST:event_jTimelineActionPerformed
 
     /**
      * @param args the command line arguments
@@ -439,6 +479,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextUsuario;
+    private javax.swing.JButton jTimeline;
     private javax.swing.JLabel jcarregafoto;
     // End of variables declaration//GEN-END:variables
 }

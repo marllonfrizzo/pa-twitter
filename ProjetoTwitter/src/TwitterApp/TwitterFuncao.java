@@ -64,7 +64,7 @@ public class TwitterFuncao {
               JOptionPane.showMessageDialog(null, "  :Não encontrado ");
          }
         
-        System.out.println(statuses.size());
+        //System.out.println(statuses.size());
         
         return statuses;
         }
@@ -136,6 +136,6 @@ public class TwitterFuncao {
         //arquivos = fc.getSelectedFiles();
         return file;
     }
-   
+ 
        
 }
