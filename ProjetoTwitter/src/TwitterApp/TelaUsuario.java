@@ -65,6 +65,7 @@ public class TelaUsuario extends javax.swing.JDialog {
             }
             i++;
         }
+<<<<<<< HEAD
     }
       
     public void PreencherTime(User user) throws TwitterException {
@@ -79,6 +80,29 @@ public class TelaUsuario extends javax.swing.JDialog {
             Jtimeline.append(status.getUser().getName() +  status.getId()+" : " + status.getText() + "\n");
             }
         
+=======
+    }
+      
+    public void PreencherTime(User user) throws TwitterException {
+        tela(user);
+        this.user = user;
+        List<Status> statuses = null;
+
+        statuses = tweetar.Timeline(conexao, user);
+
+        for (int i = 0; i < statuses.size(); i++) {
+            Status status = statuses.get(i);
+            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+        }
+    }
+    
+    public void Nome1(User usuario) throws TwitterException {
+        Jseguindo.setText("<html>Seguindo<br>" + usuario.getFriendsCount());
+        Jseguidores.setText("<html>Seguidores<br>" + usuario.getFollowersCount());
+        Jtweets.setText("<html>Tweets<br>" + usuario.getStatusesCount());
+        Jnome.setText(usuario.getName());
+        Jnome2.setText(usuario.getScreenName());
+>>>>>>> origin/master
     }
     
     public void Nome1(User usuario) throws TwitterException {
