@@ -34,7 +34,7 @@ import twitter4j.User;
  */
 public class Home extends javax.swing.JFrame {
     int i = 0;
-    int controle=0;
+    int controle = 0;
     User usuarioconexao;
     static Twitter conexao;
     static Home home;
@@ -75,16 +75,13 @@ public class Home extends javax.swing.JFrame {
     public void PreencherTime() {
         List<Status> statuses = null;
         
-        /* Limpa a Timeline antes de preenchê-la.
-           Em alguns momentos depois de exibir os tweets/seguidores/seguindo,
-           ao voltar a timeline as informações anteriores ainda estavam lá,
-           sendo mostrada junto com a timeline. */
-        Jtimeline.setText(" ");
+        Jtimeline.setText("");
         statuses = tweetar.HomeTimeline(conexao);
         for (int i = 0; i < statuses.size(); i++) {
             Status status = statuses.get(i);
             Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
         }
+        Jtimeline.setCaretPosition(0);
     }
     
     public void Nome() throws TwitterException {
@@ -196,7 +193,7 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(Jtweets)
                     .addComponent(Jseguindo)
                     .addComponent(Jseguidores))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -246,30 +243,26 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jTimeline)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jcarregafoto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)))))
+                        .addComponent(jcarregafoto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcarregafoto, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4)
-                        .addComponent(jTimeline)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4)
+                            .addComponent(jTimeline)))
+                    .addComponent(jcarregafoto, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -291,7 +284,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
-                .addGap(5, 5, 5))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,46 +310,13 @@ public class Home extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (controle == 0) {
-            try {
-                /* Valida se o usuário digitou algo no campo para twettar */
-                if (Jstatus.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Digite alguma coisa para poder Tweetar!");
-                } else {
-                    tweetar.tweetar(conexao, Jstatus.getText());
-                    JOptionPane.showMessageDialog(null, Jstatus.getText() + "  :Tweetado com sucesso ");
-                }
-            } catch (TwitterException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            Jtimeline.setText(" ");
-            PreencherTime();
-            try {
-                Nome();
-            } catch (TwitterException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                tweetar.imagem(conexao, arquivo, Jstatus.getText());
-                JOptionPane.showMessageDialog(null, Jstatus.getText() + "  :Tweetado com sucesso ");
-            } catch (TwitterException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            jcarregafoto.setText(" ");
-            controle = 0;
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
         try {
             lista = tweetar.Seguindo(conexao, usuarioconexao);
         } catch (TwitterException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Jtimeline.setText(" ");
+        Jtimeline.setText("");
         for (i = 0; i < 5; i++) {
             User user = lista.get(i);
             Jtimeline.append(user.getScreenName() + "\n");
@@ -371,19 +331,13 @@ public class Home extends javax.swing.JFrame {
         } catch (TwitterException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Jtimeline.setText(" ");
+        Jtimeline.setText("");
         for (i = 0; i < 5; i++) {
             User user = lista.get(i);
             Jtimeline.append(user.getScreenName() + "\n");
         }
         jTimeline.setEnabled(true);
     }//GEN-LAST:event_JseguidoresActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        arquivo = tweetar.escolherArquivos();
-        jcarregafoto.setText("Foto Carregada");
-        controle = 1;
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String nome = jTextUsuario.getText();
@@ -419,7 +373,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void JtweetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtweetsActionPerformed
-        Jtimeline.setText(" ");
+        Jtimeline.setText("");
         List<Status> statuses = null;
         statuses = tweetar.Timeline(conexao, usuarioconexao);
         for (int i = 0; i < statuses.size(); i++) {
@@ -430,9 +384,54 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_JtweetsActionPerformed
 
     private void jTimelineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTimelineActionPerformed
-     PreencherTime();
-     jTimeline.setEnabled(false);
+        PreencherTime();
+        jTimeline.setEnabled(false);
     }//GEN-LAST:event_jTimelineActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        arquivo = tweetar.escolherArquivos();
+        if (arquivo != null) {
+            jcarregafoto.setText("Foto Carregada");
+            controle = 1;
+        } else {
+            jcarregafoto.setText("");
+            controle = 0;
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (controle == 0) {
+            try {
+                /* Valida se o usuário digitou algo no campo para twettar */
+                if (Jstatus.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Digite alguma coisa para poder Tweetar!");
+                } else {
+                    tweetar.tweetar(conexao, Jstatus.getText());
+                    JOptionPane.showMessageDialog(null, "Tweetado com sucesso!");
+                    Jstatus.setText("");
+                }
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Jtimeline.setText("");
+            PreencherTime();
+            try {
+                Nome();
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                tweetar.imagem(conexao, arquivo, Jstatus.getText());
+                JOptionPane.showMessageDialog(null, "Foto tweetada com sucesso!");
+            } catch (TwitterException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jcarregafoto.setText("");
+            controle = 0;
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

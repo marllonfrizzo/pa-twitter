@@ -19,19 +19,18 @@ public class Main {
 
     public static void main(String[] args) throws IOException, TwitterException {
         //direto
-        /*TwitterConfiguration novo = new TwitterConfiguration();
+        TwitterConfiguration novo = new TwitterConfiguration();
 
         Twitter twitter = novo.conexao();
         home = new Home(twitter);
-        home.setVisible(true);*/
+        home.setVisible(true);
 
         //automatico token
-        TelaLogin novo;
+        /*TelaLogin novo;
         novo = new TelaLogin();
-        novo.setVisible(true);
-        /*    
-            JOptionPane.showMessageDialog(null, "Falha ao tentar logar.", "Erro", JOptionPane.ERROR_MESSAGE);
-         */
+        novo.setVisible(true);*/
+        
+        //JOptionPane.showMessageDialog(null, "Falha ao tentar logar.", "Erro", JOptionPane.ERROR_MESSAGE);
     }
 }
 

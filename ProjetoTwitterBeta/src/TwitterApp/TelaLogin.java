@@ -19,10 +19,6 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
-/**
- *
- * @author adao-
- */
 public class TelaLogin extends javax.swing.JFrame {
 
     JFXPanel javafxPanel;
@@ -44,7 +40,7 @@ public class TelaLogin extends javax.swing.JFrame {
         conexao.setOAuthConsumer(consumerKey, consumerSecret);
         requestToken = conexao.getOAuthRequestToken();
         url = requestToken.getAuthorizationURL();
-        System.out.println(url);
+        //System.out.println(url);
         return url;
     }
 
@@ -71,7 +67,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         conexao.setOAuthAccessToken(accessToken);
         //  System.out.print("CONECTADO");    
-        JOptionPane.showMessageDialog(null, "CONECTADO.");
+        JOptionPane.showMessageDialog(null, "CONECTADO");
         this.dispose();
     }
 
@@ -123,6 +119,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login on Twitter for Java");
@@ -147,7 +144,14 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Faça Login e Digite o Token para permitir o aplicativo ter acesso à sua conta:");
+        jLabel1.setText("Para permitir o aplicativo ter acesso à sua conta, faça Login e digite o Token:");
+
+        jButtonSair.setText("Sair");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,7 +167,9 @@ public class TelaLogin extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(0, 194, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSair)
+                        .addGap(0, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -175,7 +181,8 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButtonSair))
                 .addGap(6, 6, 6))
         );
 
@@ -193,6 +200,10 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButtonSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,6 +244,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainPanel;
