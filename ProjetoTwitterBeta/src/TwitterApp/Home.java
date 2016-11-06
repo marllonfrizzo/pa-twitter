@@ -349,25 +349,25 @@ public class Home extends javax.swing.JFrame {
             User user = null;
             try {
                 user = conexao.showUser(nome);
-            } catch (TwitterException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                TelaUsuario jc = new TelaUsuario(null, true);
+                try {
+                    jc.PreencherTime(user);
+                    jc.Nome1(user);
+                    jc.imagem(user);
+                } catch (TwitterException ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-            TelaUsuario jc = new TelaUsuario(null, true);
-            try {
-                jc.PreencherTime(user);
-                jc.Nome1(user);
-                jc.imagem(user);
-            } catch (TwitterException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                jc.setVisible(true);
 
-            jc.setVisible(true);
-
-            try {
-                Nome();
+                try {
+                    Nome();
+                } catch (TwitterException ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } catch (TwitterException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Usuário Inexistente!");
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -380,6 +380,7 @@ public class Home extends javax.swing.JFrame {
             Status status = statuses.get(i);
             Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
         }
+        Jtimeline.setCaretPosition(0);
         jTimeline.setEnabled(true);
     }//GEN-LAST:event_JtweetsActionPerformed
 
