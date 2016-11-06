@@ -90,6 +90,9 @@ public class TelaUsuario extends javax.swing.JDialog {
         if (user.isProtected()) {
             Jtimeline.setText("Usuário Protegido!\nOs Tweets não podem ser exibidos.");
             jseguir.setText("Solicitar Seguir");
+            Jseguidores.setEnabled(false);
+            Jseguindo.setEnabled(false);
+            Jtweets.setEnabled(false);
         } else {
             this.user = user;
             List<Status> statuses = null;
