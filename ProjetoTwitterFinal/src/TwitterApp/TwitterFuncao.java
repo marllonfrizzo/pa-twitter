@@ -30,6 +30,7 @@ public class TwitterFuncao {
             statuses = twitter.getHomeTimeline();
         } catch (TwitterException ex) {
             Logger.getLogger(TwitterFuncao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Falha em obter a Timeline");
         }
         return statuses;
     }

@@ -46,12 +46,13 @@ public class TelaLogin extends javax.swing.JFrame {
         try {
             accessToken = conexao.getOAuthAccessToken(requestToken, pin);
         } catch (TwitterException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao obter o Token");
         }
-
+        
         ConfigurationBuilder cb = new ConfigurationBuilder();
 
-        cb.setDebugEnabled(true)
+            cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(consumerKey)
                 .setOAuthConsumerSecret(consumerSecret)
                 .setOAuthAccessToken(accessToken.getToken())
@@ -109,7 +110,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldToken = new javax.swing.JTextField();
         jButtonAutenticar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonSair = new javax.swing.JButton();
@@ -130,7 +131,7 @@ public class TelaLogin extends javax.swing.JFrame {
             .addGap(0, 364, Short.MAX_VALUE)
         );
 
-        jButtonAutenticar.setText("AUTENTICAR");
+        jButtonAutenticar.setText("Autenticar");
         jButtonAutenticar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAutenticarActionPerformed(evt);
@@ -157,12 +158,12 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldToken, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAutenticar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSair)
-                        .addGap(0, 136, Short.MAX_VALUE)))
+                        .addGap(0, 150, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -173,7 +174,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldToken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAutenticar)
                     .addComponent(jButtonSair))
                 .addGap(6, 6, 6))
@@ -184,14 +185,19 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAutenticarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutenticarActionPerformed
-        conexao(jTextField1.getText());
-        Home home = null;
-        try {
-            home = new Home(conexao);
-        } catch (TwitterException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        if ("".equals(jTextFieldToken.getText())) {
+            JOptionPane.showMessageDialog(null, "Digite um Token válido!");
+        } else {
+            conexao(jTextFieldToken.getText());
+            Home home = null;
+            try {
+                home = new Home(conexao);
+                home.setVisible(true);
+            } catch (TwitterException ex) {
+                //Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Alguma coisa falhou...");
+            }
         }
-        home.setVisible(true);
     }//GEN-LAST:event_jButtonAutenticarActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -239,7 +245,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAutenticar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldToken;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }
