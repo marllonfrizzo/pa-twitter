@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TwitterApp;
 
 import static TwitterApp.Home.conexao;
-import static TwitterApp.Home.home;
 import java.awt.MediaTracker;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,18 +15,20 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 
 public class TelaUsuario extends javax.swing.JDialog {
+
     TwitterFuncao tweetar = new TwitterFuncao();
     List<User> lista;
     User user;
     int i = 0;
-  /**
+
+    /**
      * Creates new form TelaUsuario
      */
     public TelaUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-    
+
     public void imagem(User user) {
         String ima = user.getBiggerProfileImageURL();
         // inicializa a imagem URL dentro de um objeto ImageIcon
@@ -49,7 +45,7 @@ public class TelaUsuario extends javax.swing.JDialog {
         // injeta o icone no label
         Jimagem.setIcon(imgIcon);
     }
-     
+
     /*public void tela(User user) throws TwitterException {
         lista = tweetar.Seguindo(conexao, conexao.showUser(conexao.getScreenName()));
                
@@ -67,11 +63,10 @@ public class TelaUsuario extends javax.swing.JDialog {
             i++;
         }
     }*/
-    
     public void verificaSeguidor(User user) throws TwitterException {
         Relationship relacao;
-        relacao = conexao.showFriendship(conexao.getScreenName(), user.getScreenName());        
-        
+        relacao = conexao.showFriendship(conexao.getScreenName(), user.getScreenName());
+
         if (relacao.isSourceFollowingTarget()) {
             //System.out.println("Estou seguindo");
             jseguir.setEnabled(false);
@@ -82,7 +77,7 @@ public class TelaUsuario extends javax.swing.JDialog {
             jdeixar.setEnabled(false);
         }
     }
-      
+
     public void PreencherTime(User user) throws TwitterException {
         //tela(user); //Se for usar essa função, descomente ela logo acima
         verificaSeguidor(user);
@@ -106,7 +101,7 @@ public class TelaUsuario extends javax.swing.JDialog {
             Jtimeline.setCaretPosition(0);
         }
     }
-    
+
     public void Nome1(User usuario) throws TwitterException {
         Jseguindo.setText("<html>Seguindo<br>" + usuario.getFriendsCount());
         Jseguidores.setText("<html>Seguidores<br>" + usuario.getFollowersCount());
@@ -114,6 +109,7 @@ public class TelaUsuario extends javax.swing.JDialog {
         Jnome.setText(usuario.getName());
         Jnome2.setText(usuario.getScreenName());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,30 +189,33 @@ public class TelaUsuario extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jseguir, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jdeixar, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(Jtweets, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Jseguidores, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(Jimagem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Jnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(Jnome2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(Jnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(Jtweets, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                .addGap(29, 29, 29)
-                                .addComponent(Jseguindo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Jseguidores, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jseguir, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jdeixar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Jseguindo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Jnome2))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Jseguidores, Jseguindo, Jtweets});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -228,15 +227,15 @@ public class TelaUsuario extends javax.swing.JDialog {
                         .addComponent(Jnome2))
                     .addComponent(Jimagem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Jtweets)
-                    .addComponent(Jseguindo)
-                    .addComponent(Jseguidores))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(Jtweets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jseguindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jseguidores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jseguir)
-                    .addComponent(jdeixar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jseguir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jdeixar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -253,7 +252,7 @@ public class TelaUsuario extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -269,45 +268,49 @@ public class TelaUsuario extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(25, 25, 25)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(25, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(195, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(291, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
-        User aux;
+    private void jdeixarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdeixarActionPerformed
         try {
-            lista = tweetar.Seguindo(conexao, user);
-            Jtimeline.setText("Últimos 5 usuários seguidos\n\n");
-            for (i = 0; i < 5; i++) {
-                aux = lista.get(i);
-                Jtimeline.append(aux.getScreenName()+"\n");
-            }
+            tweetar.Deixar(conexao, user.getScreenName());
+            jseguir.setEnabled(true);
+            jdeixar.setEnabled(false);
+
+            JOptionPane.showMessageDialog(null, "Voce deixou de seguir: " + user.getScreenName());
         } catch (TwitterException ex) {
-            Logger.getLogger(TelaUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }//GEN-LAST:event_JseguindoActionPerformed
+            JOptionPane.showMessageDialog(null, "ERRO AO DEIXAR DE SEGUIR: " + user.getScreenName());
+        }
+    }//GEN-LAST:event_jdeixarActionPerformed
+
+    private void jseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jseguirActionPerformed
+        try {
+            tweetar.Seguir(conexao, user.getScreenName());
+            jseguir.setEnabled(false);
+            jdeixar.setEnabled(true);
+
+            JOptionPane.showMessageDialog(null, "Voce está seguindo: " + user.getScreenName());
+        } catch (TwitterException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO AO SEGUIR: " + user.getScreenName());
+        }
+    }//GEN-LAST:event_jseguirActionPerformed
 
     private void JseguidoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguidoresActionPerformed
         User aux;
@@ -316,37 +319,26 @@ public class TelaUsuario extends javax.swing.JDialog {
             Jtimeline.setText("Últimos 5 Seguidores de " + user.getScreenName() + "\n\n");
             for (i = 0; i < 5; i++) {
                 aux = lista.get(i);
-                Jtimeline.append(aux.getScreenName()+"\n");
+                Jtimeline.append(aux.getScreenName() + "\n");
             }
         } catch (TwitterException ex) {
             Logger.getLogger(TelaUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_JseguidoresActionPerformed
 
-    private void jseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jseguirActionPerformed
+    private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
+        User aux;
         try {
-            tweetar.Seguir(conexao,user.getScreenName());
-            jseguir.setEnabled(false);
-            jdeixar.setEnabled(true);
-                        
-            JOptionPane.showMessageDialog(null, "Voce está seguindo: "+user.getScreenName());
+            lista = tweetar.Seguindo(conexao, user);
+            Jtimeline.setText("Últimos 5 usuários seguidos\n\n");
+            for (i = 0; i < 5; i++) {
+                aux = lista.get(i);
+                Jtimeline.append(aux.getScreenName() + "\n");
+            }
         } catch (TwitterException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO AO SEGUIR: "+user.getScreenName());
+            Logger.getLogger(TelaUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jseguirActionPerformed
-   
-    private void jdeixarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdeixarActionPerformed
-        try {
-            tweetar.Deixar(conexao, user.getScreenName());
-            jseguir.setEnabled(true);
-            jdeixar.setEnabled(false);
-                       
-            JOptionPane.showMessageDialog(null, "Voce deixou de seguir: " + user.getScreenName());
-        } catch (TwitterException ex) {
-            JOptionPane.showMessageDialog(null, "ERRO AO DEIXAR DE SEGUIR: " + user.getScreenName());
-        }
-    }//GEN-LAST:event_jdeixarActionPerformed
+    }//GEN-LAST:event_JseguindoActionPerformed
 
     private void JtweetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtweetsActionPerformed
         try {

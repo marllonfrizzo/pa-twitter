@@ -1,7 +1,6 @@
 package TwitterApp;
 
 import java.awt.BorderLayout;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -9,9 +8,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -62,7 +59,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         TwitterFactory factory = new TwitterFactory(cb.build());
         conexao = factory.getInstance();
-        conexao.setOAuthAccessToken(accessToken); 
+        conexao.setOAuthAccessToken(accessToken);
         JOptionPane.showMessageDialog(null, "CONECTADO");
         this.dispose();
     }
@@ -113,7 +110,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonAutenticar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonSair = new javax.swing.JButton();
 
@@ -133,10 +130,10 @@ public class TelaLogin extends javax.swing.JFrame {
             .addGap(0, 364, Short.MAX_VALUE)
         );
 
-        jButton1.setText("AUTENTICAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAutenticar.setText("AUTENTICAR");
+        jButtonAutenticar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAutenticarActionPerformed(evt);
             }
         });
 
@@ -162,7 +159,7 @@ public class TelaLogin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(jButtonAutenticar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSair)
                         .addGap(0, 136, Short.MAX_VALUE)))
@@ -177,7 +174,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(jButtonAutenticar)
                     .addComponent(jButtonSair))
                 .addGap(6, 6, 6))
         );
@@ -186,7 +183,7 @@ public class TelaLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAutenticarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutenticarActionPerformed
         conexao(jTextField1.getText());
         Home home = null;
         try {
@@ -195,7 +192,7 @@ public class TelaLogin extends javax.swing.JFrame {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         home.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAutenticarActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         System.exit(0);
@@ -239,7 +236,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAutenticar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;

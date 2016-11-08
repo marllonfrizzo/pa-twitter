@@ -1,40 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TwitterApp;
 
-import static TwitterApp.Home.conexao;
-import java.awt.MediaTracker;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resources;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import twitter4j.DirectMessage;
 import twitter4j.IDs;
-import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
-import twitter4j.api.SuggestedUsersResources;
 
-/**
- *
- * @author adao-
- */
 public class TwitterFuncao {
 
     int i = 0;
@@ -43,7 +22,6 @@ public class TwitterFuncao {
 
     public void tweetar(Twitter twitter, String texto) throws TwitterException {
         Status status = twitter.updateStatus(texto);
-
     }
 
     public List<Status> HomeTimeline(Twitter twitter) {
@@ -141,5 +119,4 @@ public class TwitterFuncao {
             return null;
         }
     }
-    
 }
