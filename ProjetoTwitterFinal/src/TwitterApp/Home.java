@@ -4,12 +4,17 @@ import java.awt.MediaTracker;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import twitter4j.Location;
 import twitter4j.Status;
+import twitter4j.Trend;
+import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
@@ -85,14 +90,7 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        Jnome = new javax.swing.JLabel();
-        Jtweets = new javax.swing.JButton();
-        Jseguindo = new javax.swing.JButton();
-        Jseguidores = new javax.swing.JButton();
-        Jnome2 = new javax.swing.JLabel();
-        Jimagem = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelTimeline = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Jstatus = new javax.swing.JTextArea();
         jButtonTweetar = new javax.swing.JButton();
@@ -101,92 +99,28 @@ public class Home extends javax.swing.JFrame {
         jButtonFoto = new javax.swing.JButton();
         jcarregafoto = new javax.swing.JLabel();
         jTimeline = new javax.swing.JButton();
+        jPanelPesquisa = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jTextUsuario = new javax.swing.JTextField();
         jButtonPesquisar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jPanelPerfil = new javax.swing.JPanel();
+        Jnome = new javax.swing.JLabel();
+        Jtweets = new javax.swing.JButton();
+        Jseguindo = new javax.swing.JButton();
+        Jseguidores = new javax.swing.JButton();
+        Jnome2 = new javax.swing.JLabel();
+        Jimagem = new javax.swing.JLabel();
+        jPanelTrendings = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaTrendings = new javax.swing.JTextArea();
+        jButtonTrendings = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Twitter for Java");
         setResizable(false);
+        setSize(new java.awt.Dimension(0, 0));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        Jnome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Jnome.setText("Nome");
-
-        Jtweets.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        Jtweets.setText("Tweets");
-        Jtweets.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JtweetsActionPerformed(evt);
-            }
-        });
-
-        Jseguindo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        Jseguindo.setText("Seguindo");
-        Jseguindo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JseguindoActionPerformed(evt);
-            }
-        });
-
-        Jseguidores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        Jseguidores.setText("Seguidor");
-        Jseguidores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JseguidoresActionPerformed(evt);
-            }
-        });
-
-        Jnome2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Jnome2.setText("jLabel1");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Jtweets, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Jseguindo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Jseguidores, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(Jimagem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(Jnome2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(Jnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Jseguidores, Jseguindo, Jtweets});
-
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Jnome)
-                        .addGap(4, 4, 4)
-                        .addComponent(Jnome2))
-                    .addComponent(Jimagem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Jtweets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Jseguindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Jseguidores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(24, 24, 24))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelTimeline.setBorder(javax.swing.BorderFactory.createTitledBorder("Timeline"));
 
         Jstatus.setColumns(20);
         Jstatus.setLineWrap(true);
@@ -222,18 +156,18 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelTimelineLayout = new javax.swing.GroupLayout(jPanelTimeline);
+        jPanelTimeline.setLayout(jPanelTimelineLayout);
+        jPanelTimelineLayout.setHorizontalGroup(
+            jPanelTimelineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTimelineLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addGroup(jPanelTimelineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTimelineLayout.createSequentialGroup()
                         .addComponent(jTimeline)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addComponent(jcarregafoto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonFoto)
@@ -241,23 +175,27 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jButtonTweetar)))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanelTimelineLayout.setVerticalGroup(
+            jPanelTimelineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTimelineLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTimelineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelTimelineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButtonTweetar)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanelTimelineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonFoto)
                             .addComponent(jTimeline)))
                     .addComponent(jcarregafoto, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
+
+        jPanelPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa"));
+
+        jLabel1.setText("Pesquisar Usuários:");
 
         jButtonPesquisar.setText("Pesquisar");
         jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +204,141 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Pesquisar Usuários:");
+        javax.swing.GroupLayout jPanelPesquisaLayout = new javax.swing.GroupLayout(jPanelPesquisa);
+        jPanelPesquisa.setLayout(jPanelPesquisaLayout);
+        jPanelPesquisaLayout.setHorizontalGroup(
+            jPanelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPesquisaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPesquisar)
+                .addContainerGap())
+        );
+        jPanelPesquisaLayout.setVerticalGroup(
+            jPanelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPesquisaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisar)
+                    .addComponent(jLabel1))
+                .addContainerGap())
+        );
+
+        jPanelPerfil.setBorder(javax.swing.BorderFactory.createTitledBorder("Meu Perfil"));
+
+        Jnome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Jnome.setText("Nome");
+
+        Jtweets.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Jtweets.setText("Tweets");
+        Jtweets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtweetsActionPerformed(evt);
+            }
+        });
+
+        Jseguindo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Jseguindo.setText("Seguindo");
+        Jseguindo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JseguindoActionPerformed(evt);
+            }
+        });
+
+        Jseguidores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Jseguidores.setText("Seguidor");
+        Jseguidores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JseguidoresActionPerformed(evt);
+            }
+        });
+
+        Jnome2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Jnome2.setText("@usuario");
+
+        javax.swing.GroupLayout jPanelPerfilLayout = new javax.swing.GroupLayout(jPanelPerfil);
+        jPanelPerfil.setLayout(jPanelPerfilLayout);
+        jPanelPerfilLayout.setHorizontalGroup(
+            jPanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPerfilLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Jtweets, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Jseguindo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Jseguidores, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPerfilLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(Jimagem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Jnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jnome2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
+        );
+
+        jPanelPerfilLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Jseguidores, Jseguindo, Jtweets});
+
+        jPanelPerfilLayout.setVerticalGroup(
+            jPanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPerfilLayout.createSequentialGroup()
+                .addGroup(jPanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPerfilLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Jnome)
+                        .addGap(4, 4, 4)
+                        .addComponent(Jnome2))
+                    .addComponent(Jimagem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Jtweets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jseguindo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jseguidores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
+        );
+
+        jPanelTrendings.setBorder(javax.swing.BorderFactory.createTitledBorder("Trendings"));
+
+        jTextAreaTrendings.setEditable(false);
+        jTextAreaTrendings.setColumns(20);
+        jTextAreaTrendings.setRows(5);
+        jTextAreaTrendings.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane3.setViewportView(jTextAreaTrendings);
+
+        jButtonTrendings.setText("Trendings");
+        jButtonTrendings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTrendingsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelTrendingsLayout = new javax.swing.GroupLayout(jPanelTrendings);
+        jPanelTrendings.setLayout(jPanelTrendingsLayout);
+        jPanelTrendingsLayout.setHorizontalGroup(
+            jPanelTrendingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTrendingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelTrendingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanelTrendingsLayout.createSequentialGroup()
+                        .addComponent(jButtonTrendings)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanelTrendingsLayout.setVerticalGroup(
+            jPanelTrendingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTrendingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonTrendings)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,65 +347,31 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonPesquisar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelTrendings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelTimeline, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPesquisar)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelTimeline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelTrendings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
-        try {
-            lista = tweetar.Seguindo(conexao, usuarioconexao);
-            Jtimeline.setText("Últimos 5 usuários seguidos\n\n");
-            for (i = 0; i < 5; i++) {
-                User user = lista.get(i);
-                Jtimeline.append(user.getScreenName() + "\n");
-            }
-            jTimeline.setEnabled(true);
-        } catch (TwitterException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_JseguindoActionPerformed
-
-    private void JseguidoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguidoresActionPerformed
-        lista = null;
-        try {
-            lista = tweetar.Seguidores(conexao, usuarioconexao);
-            Jtimeline.setText("Últimos 5 Seguidores de " + usuarioconexao.getScreenName() + "\n\n");
-            for (i = 0; i < 5; i++) {
-                User user = lista.get(i);
-                Jtimeline.append(user.getScreenName() + "\n");
-            }
-            jTimeline.setEnabled(true);
-        } catch (TwitterException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_JseguidoresActionPerformed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         String nome = jTextUsuario.getText();
@@ -367,18 +405,6 @@ public class Home extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
-
-    private void JtweetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtweetsActionPerformed
-        Jtimeline.setText("");
-        List<Status> statuses = null;
-        statuses = tweetar.Timeline(conexao, usuarioconexao);
-        for (int i = 0; i < statuses.size(); i++) {
-            Status status = statuses.get(i);
-            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
-        }
-        Jtimeline.setCaretPosition(0);
-        jTimeline.setEnabled(true);
-    }//GEN-LAST:event_JtweetsActionPerformed
 
     private void jTimelineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTimelineActionPerformed
         PreencherTime();
@@ -432,6 +458,84 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonTweetarActionPerformed
 
+    private void jButtonTrendingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTrendingsActionPerformed
+        try {
+            //int woeid = 23424768; // Brasil
+            //int woeid = 1; // Global/Worldwide
+            Integer woeid = 0;
+            String retorno = JOptionPane.showInputDialog("Informe o valor do WOEID da localidade\nDeixe vazio para usar o Brasil"
+                    + " ou use 1 para Global");
+
+            if (retorno == null) {
+                // Nao faça nada
+            } else {
+                if (retorno.isEmpty()) {
+                    woeid = 23424768;
+                } else {
+                    woeid = Integer.valueOf(retorno);
+                }
+
+                Trends trends = conexao.getPlaceTrends(woeid);
+                Trend trend[] = trends.getTrends();
+                Date trendAt = trends.getTrendAt();
+                Location local = trends.getLocation();
+
+                jTextAreaTrendings.setText("Assuntos do Momento: " + local.getName() + "\n\n");
+                jTextAreaTrendings.setCaretPosition(0);
+
+                SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+
+                for (int j = 0; j < 10; j++) {
+                    //Jtimeline.append(dt.format(trendAt)+": "+trend[j].getName()+"\n");
+                    jTextAreaTrendings.append(dt.format(trendAt) + ": " + trend[j].getName() + "\n");
+                }
+            }
+        } catch (TwitterException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao captar os Trends!");
+        }
+    }//GEN-LAST:event_jButtonTrendingsActionPerformed
+
+    private void JseguidoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguidoresActionPerformed
+        lista = null;
+        try {
+            lista = tweetar.Seguidores(conexao, usuarioconexao);
+            Jtimeline.setText("Últimos 5 Seguidores de " + usuarioconexao.getScreenName() + "\n\n");
+            for (i = 0; i < 5; i++) {
+                User user = lista.get(i);
+                Jtimeline.append(user.getScreenName() + "\n");
+            }
+            jTimeline.setEnabled(true);
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_JseguidoresActionPerformed
+
+    private void JseguindoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JseguindoActionPerformed
+        try {
+            lista = tweetar.Seguindo(conexao, usuarioconexao);
+            Jtimeline.setText("Últimos 5 usuários seguidos\n\n");
+            for (i = 0; i < 5; i++) {
+                User user = lista.get(i);
+                Jtimeline.append(user.getScreenName() + "\n");
+            }
+            jTimeline.setEnabled(true);
+        } catch (TwitterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_JseguindoActionPerformed
+
+    private void JtweetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtweetsActionPerformed
+        Jtimeline.setText("");
+        List<Status> statuses = null;
+        statuses = tweetar.Timeline(conexao, usuarioconexao);
+        for (int i = 0; i < statuses.size(); i++) {
+            Status status = statuses.get(i);
+            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+        }
+        Jtimeline.setCaretPosition(0);
+        jTimeline.setEnabled(true);
+    }//GEN-LAST:event_JtweetsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -483,12 +587,17 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton Jtweets;
     private javax.swing.JButton jButtonFoto;
     private javax.swing.JButton jButtonPesquisar;
+    private javax.swing.JButton jButtonTrendings;
     private javax.swing.JButton jButtonTweetar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelPerfil;
+    private javax.swing.JPanel jPanelPesquisa;
+    private javax.swing.JPanel jPanelTimeline;
+    private javax.swing.JPanel jPanelTrendings;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextAreaTrendings;
     private javax.swing.JTextField jTextUsuario;
     private javax.swing.JButton jTimeline;
     private javax.swing.JLabel jcarregafoto;
