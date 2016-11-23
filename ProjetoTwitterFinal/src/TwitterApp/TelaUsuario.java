@@ -46,24 +46,7 @@ public class TelaUsuario extends javax.swing.JDialog {
         Jimagem.setIcon(imgIcon);
     }
 
-    /*public void tela(User user) throws TwitterException {
-        lista = tweetar.Seguindo(conexao, conexao.showUser(conexao.getScreenName()));
-               
-        System.out.println(conexao.getScreenName()); //mf
-        System.out.println(user.getScreenName()); //bb
-        
-        i = 0;
-        while (i < lista.size()) {
-            if (user.getId() == lista.get(i).getId()) {
-                jdeixar.setEnabled(true);
-                break;
-            } else {
-                jseguir.setEnabled(true);
-            }
-            i++;
-        }
-    }*/
-    public void verificaSeguidor(User user) throws TwitterException {
+    public boolean verificaSeguidor(User user) throws TwitterException {
         Relationship relacao;
         relacao = conexao.showFriendship(conexao.getScreenName(), user.getScreenName());
 
@@ -71,18 +54,19 @@ public class TelaUsuario extends javax.swing.JDialog {
             //System.out.println("Estou seguindo");
             jseguir.setEnabled(false);
             jdeixar.setEnabled(true);
+            return true;
         } else {
             //System.out.println("Não Estou seguindo");
             jseguir.setEnabled(true);
             jdeixar.setEnabled(false);
+            return false;
         }
     }
 
     public void PreencherTime(User user) throws TwitterException {
-        //tela(user); //Se for usar essa função, descomente ela logo acima
-        verificaSeguidor(user);
+        boolean estouSeguindo = verificaSeguidor(user);
 
-        if (user.isProtected()) {
+        if (user.isProtected() && !estouSeguindo) {
             Jtimeline.setText("Usuário Protegido!\nOs Tweets não podem ser exibidos.");
             jseguir.setText("Solicitar Seguir");
             Jseguidores.setEnabled(false);
@@ -94,11 +78,15 @@ public class TelaUsuario extends javax.swing.JDialog {
 
             statuses = tweetar.Timeline(conexao, user);
 
-            for (int i = 0; i < statuses.size(); i++) {
-                Status status = statuses.get(i);
-                Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+            if (statuses == null) {
+                Jtimeline.setText("Você está impedido de seguir ou ver os tweets de " + user.getScreenName() + ".");
+            } else {
+                for (int i = 0; i < statuses.size(); i++) {
+                    Status status = statuses.get(i);
+                    Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+                }
+                Jtimeline.setCaretPosition(0);
             }
-            Jtimeline.setCaretPosition(0);
         }
     }
 

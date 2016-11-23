@@ -46,6 +46,7 @@ public class Home extends javax.swing.JFrame {
         PreencherTime();
         Nome();
         imagem(usuarioconexao);
+        jButtonDetalhar.setEnabled(false);
     }
 
     public void imagem(User user) {
@@ -72,7 +73,7 @@ public class Home extends javax.swing.JFrame {
         statuses = tweetar.HomeTimeline(conexao);
         for (int i = 0; i < statuses.size(); i++) {
             Status status = statuses.get(i);
-            Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
+            Jtimeline.append(status.getUser().getName() + ": " + status.getText() + "\n\n");
         }
         Jtimeline.setCaretPosition(0);
     }
@@ -120,6 +121,11 @@ public class Home extends javax.swing.JFrame {
         jTextAreaTrendings = new javax.swing.JTextArea();
         jButtonTrendings = new javax.swing.JButton();
         jButtonDetalhar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Twitter for Java");
@@ -142,6 +148,8 @@ public class Home extends javax.swing.JFrame {
 
         Jtimeline.setEditable(false);
         Jtimeline.setColumns(20);
+        Jtimeline.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        Jtimeline.setLineWrap(true);
         Jtimeline.setRows(5);
         jScrollPane2.setViewportView(Jtimeline);
 
@@ -312,6 +320,7 @@ public class Home extends javax.swing.JFrame {
 
         jTextAreaTrendings.setEditable(false);
         jTextAreaTrendings.setColumns(20);
+        jTextAreaTrendings.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jTextAreaTrendings.setRows(5);
         jTextAreaTrendings.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane3.setViewportView(jTextAreaTrendings);
@@ -353,9 +362,35 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jButtonTrendings)
                     .addComponent(jButtonDetalhar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jMenu1.setText("Arquivo");
+
+        jMenuItem1.setText("Sair");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Ajuda");
+
+        jMenuItem2.setText("Sobre");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -400,24 +435,17 @@ public class Home extends javax.swing.JFrame {
             User user = null;
             try {
                 user = conexao.showUser(nome);
-                TelaUsuario jc = new TelaUsuario(null, true);
                 try {
+                    TelaUsuario jc = new TelaUsuario(null, true);
                     jc.PreencherTime(user);
                     jc.Nome1(user);
                     jc.imagem(user);
-                } catch (TwitterException ex) {
-                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                jc.setVisible(true);
-
-                try {
+                    jc.setVisible(true);
                     Nome();
                 } catch (TwitterException ex) {
-                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Falha em preencher os dados!");
                 }
             } catch (TwitterException ex) {
-                //Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Usuário Inexistente!");
             }
         }
@@ -477,12 +505,13 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonTrendingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTrendingsActionPerformed
         try {
+            jButtonDetalhar.setEnabled(true);
             Integer woeid = 0;
             String retorno = JOptionPane.showInputDialog("Informe o valor do WOEID da localidade\nDeixe vazio para usar o Brasil"
                     + " ou use 1 para Global");
 
             if (retorno == null) {
-                // Nao faça nada
+                jButtonDetalhar.setEnabled(false);
             } else {
                 if (retorno.isEmpty()) {
                     woeid = 23424768;
@@ -541,7 +570,11 @@ public class Home extends javax.swing.JFrame {
     private void JtweetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtweetsActionPerformed
         Jtimeline.setText("");
         List<Status> statuses = null;
-        statuses = tweetar.Timeline(conexao, usuarioconexao);
+        try {
+            statuses = tweetar.Timeline(conexao, usuarioconexao);
+        } catch (TwitterException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao exibir a Timeline!");
+        }
         for (int i = 0; i < statuses.size(); i++) {
             Status status = statuses.get(i);
             Jtimeline.append(status.getUser().getName() + " : " + status.getText() + "\n");
@@ -551,30 +584,37 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_JtweetsActionPerformed
 
     private void jButtonDetalharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetalharActionPerformed
-        if ("".equals(jTextAreaTrendings.getText())) {
-            JOptionPane.showMessageDialog(null, "Visualize os Trending Topics primeiro!");
+        String retorno = JOptionPane.showInputDialog("Informe a posição do TT");
+        if (retorno == null) {
+            // Não faça nada
+        } else if (retorno.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite algo!");
+            jButtonDetalhar.doClick();
         } else {
-            String retorno = JOptionPane.showInputDialog("Informe a posição do TT");
-            if (retorno == null) {
-                // Não faça nada
-            } else if (retorno.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Digite algo!");
-                jButtonDetalhar.doClick();
-            } else {
-                jTimeline.setEnabled(true);
-                try {
-                    Jtimeline.setText("");
-                    Query query = new Query(trend[Integer.parseInt(retorno)-1].getQuery());
-                    QueryResult result = conexao.search(query);
-                    for (Status status : result.getTweets()) {
-                        Jtimeline.append(status.getUser().getScreenName()+": "+status.getText()+"\n");
-                    }
-                } catch (TwitterException ex) {
-                    JOptionPane.showMessageDialog(null, "Deu ruim!");
+            jTimeline.setEnabled(true);
+            try {
+                Jtimeline.setText("");
+                Query query = new Query(trend[Integer.parseInt(retorno) - 1].getQuery());
+                QueryResult result = conexao.search(query);
+
+                for (Status status : result.getTweets()) {
+                    Jtimeline.append(status.getUser().getScreenName() + ": " + status.getText() + "\n\n");
                 }
+                Jtimeline.setCaretPosition(0);
+            } catch (TwitterException ex) {
+                JOptionPane.showMessageDialog(null, "Deu ruim!");
             }
         }
     }//GEN-LAST:event_jButtonDetalharActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "Twitter for Java\n"
+                + "Programação de Aplicativos - UTFPR-CM, 2016\nAdão Ribeiro, Marllon Frizzo, Ramon Fanti");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -631,6 +671,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButtonTrendings;
     private javax.swing.JButton jButtonTweetar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanelPerfil;
     private javax.swing.JPanel jPanelPesquisa;
     private javax.swing.JPanel jPanelTimeline;

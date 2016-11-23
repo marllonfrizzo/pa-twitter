@@ -35,15 +35,11 @@ public class TwitterFuncao {
         return statuses;
     }
 
-    public List<Status> Timeline(Twitter twitter, User user) {
+    public List<Status> Timeline(Twitter twitter, User user) throws TwitterException {
 
         List<Status> statuses = null;
 
-        try {
-            statuses = twitter.getUserTimeline(user.getId());
-        } catch (TwitterException ex) {
-            JOptionPane.showMessageDialog(null, "  :Não encontrado ");
-        }
+        statuses = twitter.getUserTimeline(user.getId());
 
         //System.out.println(statuses.size());
         return statuses;
