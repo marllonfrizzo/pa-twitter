@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import twitter4j.Location;
+import twitter4j.Query;
+import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Trend;
 import twitter4j.Trends;
@@ -29,6 +31,9 @@ public class Home extends javax.swing.JFrame {
     URL urlImg;
     List<User> lista;
     File arquivo = null;
+    
+    private Trend trend[];
+    private Date trendAt;
 
     TwitterFuncao tweetar = new TwitterFuncao();
 
@@ -114,6 +119,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaTrendings = new javax.swing.JTextArea();
         jButtonTrendings = new javax.swing.JButton();
+        jButtonDetalhar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Twitter for Java");
@@ -317,6 +323,13 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButtonDetalhar.setText("Detalhar");
+        jButtonDetalhar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDetalharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelTrendingsLayout = new javax.swing.GroupLayout(jPanelTrendings);
         jPanelTrendings.setLayout(jPanelTrendingsLayout);
         jPanelTrendingsLayout.setHorizontalGroup(
@@ -327,6 +340,8 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(jPanelTrendingsLayout.createSequentialGroup()
                         .addComponent(jButtonTrendings)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDetalhar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -334,7 +349,9 @@ public class Home extends javax.swing.JFrame {
             jPanelTrendingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTrendingsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonTrendings)
+                .addGroup(jPanelTrendingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonTrendings)
+                    .addComponent(jButtonDetalhar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                 .addContainerGap())
@@ -460,8 +477,6 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonTrendingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTrendingsActionPerformed
         try {
-            //int woeid = 23424768; // Brasil
-            //int woeid = 1; // Global/Worldwide
             Integer woeid = 0;
             String retorno = JOptionPane.showInputDialog("Informe o valor do WOEID da localidade\nDeixe vazio para usar o Brasil"
                     + " ou use 1 para Global");
@@ -476,8 +491,8 @@ public class Home extends javax.swing.JFrame {
                 }
 
                 Trends trends = conexao.getPlaceTrends(woeid);
-                Trend trend[] = trends.getTrends();
-                Date trendAt = trends.getTrendAt();
+                trend = trends.getTrends();
+                trendAt = trends.getTrendAt();
                 Location local = trends.getLocation();
 
                 jTextAreaTrendings.setText("Assuntos do Momento: " + local.getName() + "\n\n");
@@ -486,8 +501,7 @@ public class Home extends javax.swing.JFrame {
                 SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
 
                 for (int j = 0; j < 10; j++) {
-                    //Jtimeline.append(dt.format(trendAt)+": "+trend[j].getName()+"\n");
-                    jTextAreaTrendings.append(dt.format(trendAt) + ": " + trend[j].getName() + "\n");
+                    jTextAreaTrendings.append(j+1+". "+dt.format(trendAt) + ": " + trend[j].getName() + "\n");
                 }
             }
         } catch (TwitterException ex) {
@@ -535,6 +549,32 @@ public class Home extends javax.swing.JFrame {
         Jtimeline.setCaretPosition(0);
         jTimeline.setEnabled(true);
     }//GEN-LAST:event_JtweetsActionPerformed
+
+    private void jButtonDetalharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetalharActionPerformed
+        if ("".equals(jTextAreaTrendings.getText())) {
+            JOptionPane.showMessageDialog(null, "Visualize os Trending Topics primeiro!");
+        } else {
+            String retorno = JOptionPane.showInputDialog("Informe a posição do TT");
+            if (retorno == null) {
+                // Não faça nada
+            } else if (retorno.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Digite algo!");
+                jButtonDetalhar.doClick();
+            } else {
+                jTimeline.setEnabled(true);
+                try {
+                    Jtimeline.setText("");
+                    Query query = new Query(trend[Integer.parseInt(retorno)-1].getQuery());
+                    QueryResult result = conexao.search(query);
+                    for (Status status : result.getTweets()) {
+                        Jtimeline.append(status.getUser().getScreenName()+": "+status.getText()+"\n");
+                    }
+                } catch (TwitterException ex) {
+                    JOptionPane.showMessageDialog(null, "Deu ruim!");
+                }
+            }
+        }
+    }//GEN-LAST:event_jButtonDetalharActionPerformed
 
     /**
      * @param args the command line arguments
@@ -585,6 +625,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextArea Jstatus;
     private javax.swing.JTextArea Jtimeline;
     private javax.swing.JButton Jtweets;
+    private javax.swing.JButton jButtonDetalhar;
     private javax.swing.JButton jButtonFoto;
     private javax.swing.JButton jButtonPesquisar;
     private javax.swing.JButton jButtonTrendings;
